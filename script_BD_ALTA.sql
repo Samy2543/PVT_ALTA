@@ -546,7 +546,7 @@ insert into precios values(1,"511JE01329",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01340",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01342",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01345",39,13.65,9.75,15.6);
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123';
 select * from users;
 describe pv_alta;
 select version();
