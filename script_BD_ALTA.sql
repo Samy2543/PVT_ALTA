@@ -613,6 +613,7 @@ select * from raza;
 select * from semen;
 select * from termo;
 alter table canastilla auto_increment=8;
+-- 
 create or replace view inventario as
 select t.id as arete, t.nombre as nombre , tr.id_termo as Termo, c.num_canasta Canastilla, s.unidades
 from toro t
@@ -620,4 +621,7 @@ inner join semen s on t.id= s.id_toro
 inner join canastilla c on s.id_canastilla=c.id_canastilla
 inner join termo tr on tr.id_termo=c.id_termo
 order by  t.id,tr.id_termo,c.id_canastilla; 
+
 select * from inventario;
+describe clientes; -- 1 activo, 0 inactivo
+alter table clientes add estatus tinyint;
