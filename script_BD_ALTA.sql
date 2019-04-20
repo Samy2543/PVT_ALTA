@@ -568,7 +568,9 @@ alter table sacado_de add foreign key (id_termo) references termo(id_termo);
 alter table pedidos drop foreign key pedidos_ibfk_3;
 alter table tipo_cambio change id id int not null auto_increment;
 alter table pedidos add foreign key (id_tipo_c) references tipo_cambio(id);
+-- llenado la tabla termo
 insert into termo(id_termo,numero_termo) values(null,1);
+-- llenando la tabla de canastilla
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,1);
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,2);
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,3);
@@ -612,16 +614,39 @@ select id from toro where nombre ="lancing" and id_raza=2;
 select * from raza;
 select * from semen;
 select * from termo;
+-- modificar el autoincrement de una tabla
 alter table canastilla auto_increment=8;
--- 
+-- inventarios ordenados por toro, termo y canastilla
 create or replace view inventario as
-select t.id as arete, t.nombre as nombre , tr.id_termo as Termo, c.num_canasta Canastilla, s.unidades
+select t.id as Arete, t.nombre as Nombre , tr.id_termo as Termo, c.num_canasta Canastilla, s.unidades Unidades
 from toro t
 inner join semen s on t.id= s.id_toro 
 inner join canastilla c on s.id_canastilla=c.id_canastilla
 inner join termo tr on tr.id_termo=c.id_termo
-order by  t.id,tr.id_termo,c.id_canastilla; 
-
+order by  t.id asc,tr.id_termo asc,c.id_canastilla asc; 
 select * from inventario;
+
+describe clientes;
+alter table clientes change estatus estatus varchar(10);
+
+-- lista de precios de sello rojo
+create or replace view Lista_precios_selloR as
+select t.id as Arete, t.nombre as Toro, r.nombre as Raza, p.precio_publico as Precio_Publico, p.desc_alta as Descuento, p.apoyo as Apoyo,
+p.precio_productor as Precio_Productor
+from toro t
+inner join raza r on t.id_raza= r.id
+inner join precios p on t.id=p.id_toro 
+where p.id_empresa=1;
+-- se planea hacer una lista para cada empresa
+-- lista de toros
+create or replace view Toros as
+select t.id as Arete, t.nombre as Nombre, r.nombre as Raza, t.estatus as Estatus
+from toro t
+inner join raza r on t.id_raza= r.id;
+-- lista de usuarios
+create or replace view info_usuarios as
+select u.nombre as Nombre, u.usuario as Usuario,p.Nombre as Permiso, p.descripcion as Descripcion
+from usuario u
+inner join permisos p on u.id_permiso=p.id;
+
 describe clientes; -- 1 activo, 0 inactivo
-alter table clientes add estatus tinyint;

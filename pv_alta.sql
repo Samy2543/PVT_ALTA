@@ -82,7 +82,7 @@ CREATE TABLE `clientes` (
   `direccion` varchar(50) DEFAULT NULL,
   `codigo_p` varchar(20) DEFAULT NULL,
   `ciudad` varchar(30) DEFAULT NULL,
-  `estatus` tinyint(4) DEFAULT NULL,
+  `estatus` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id_cliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -125,6 +125,21 @@ LOCK TABLES `detalle_pedidos` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `info_usuarios`
+--
+
+DROP TABLE IF EXISTS `info_usuarios`;
+/*!50001 DROP VIEW IF EXISTS `info_usuarios`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `info_usuarios` AS SELECT 
+ 1 AS `Nombre`,
+ 1 AS `Usuario`,
+ 1 AS `Permiso`,
+ 1 AS `Descripcion`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `inventario`
 --
 
@@ -133,11 +148,29 @@ DROP TABLE IF EXISTS `inventario`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `inventario` AS SELECT 
- 1 AS `arete`,
- 1 AS `nombre`,
+ 1 AS `Arete`,
+ 1 AS `Nombre`,
  1 AS `Termo`,
  1 AS `Canastilla`,
- 1 AS `unidades`*/;
+ 1 AS `Unidades`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `lista_precios_sellor`
+--
+
+DROP TABLE IF EXISTS `lista_precios_sellor`;
+/*!50001 DROP VIEW IF EXISTS `lista_precios_sellor`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `lista_precios_sellor` AS SELECT 
+ 1 AS `Arete`,
+ 1 AS `Toro`,
+ 1 AS `Raza`,
+ 1 AS `Precio_Publico`,
+ 1 AS `Descuento`,
+ 1 AS `Apoyo`,
+ 1 AS `Precio_Productor`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -411,6 +444,21 @@ INSERT INTO `toro` VALUES ('011HO00586','ACE-RED',1,'Activo'),('011HO11272','GIL
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `toros`
+--
+
+DROP TABLE IF EXISTS `toros`;
+/*!50001 DROP VIEW IF EXISTS `toros`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `toros` AS SELECT 
+ 1 AS `Arete`,
+ 1 AS `Nombre`,
+ 1 AS `Raza`,
+ 1 AS `Estatus`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -426,7 +474,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   KEY `id_permiso` (`id_permiso`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permisos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -435,8 +483,27 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'Juan','123',1,'JJvidana'),(2,'Alejandrina','123',2,'Yiya');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `info_usuarios`
+--
+
+/*!50001 DROP VIEW IF EXISTS `info_usuarios`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `info_usuarios` AS select `u`.`Nombre` AS `Nombre`,`u`.`usuario` AS `Usuario`,`p`.`Nombre` AS `Permiso`,`p`.`descripcion` AS `Descripcion` from (`usuario` `u` join `permisos` `p` on((`u`.`id_permiso` = `p`.`id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `inventario`
@@ -451,7 +518,43 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `inventario` AS select `t`.`id` AS `arete`,`t`.`nombre` AS `nombre`,`tr`.`id_termo` AS `Termo`,`c`.`num_canasta` AS `Canastilla`,`s`.`unidades` AS `unidades` from (((`toro` `t` join `semen` `s` on((`t`.`id` = `s`.`id_toro`))) join `canastilla` `c` on((`s`.`id_canastilla` = `c`.`id_canastilla`))) join `termo` `tr` on((`tr`.`id_termo` = `c`.`id_termo`))) order by `t`.`id`,`tr`.`id_termo`,`c`.`id_canastilla` */;
+/*!50001 VIEW `inventario` AS select `t`.`id` AS `Arete`,`t`.`nombre` AS `Nombre`,`tr`.`id_termo` AS `Termo`,`c`.`num_canasta` AS `Canastilla`,`s`.`unidades` AS `Unidades` from (((`toro` `t` join `semen` `s` on((`t`.`id` = `s`.`id_toro`))) join `canastilla` `c` on((`s`.`id_canastilla` = `c`.`id_canastilla`))) join `termo` `tr` on((`tr`.`id_termo` = `c`.`id_termo`))) order by `t`.`id`,`tr`.`id_termo`,`c`.`id_canastilla` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `lista_precios_sellor`
+--
+
+/*!50001 DROP VIEW IF EXISTS `lista_precios_sellor`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `lista_precios_sellor` AS select `t`.`id` AS `Arete`,`t`.`nombre` AS `Toro`,`r`.`nombre` AS `Raza`,`p`.`precio_publico` AS `Precio_Publico`,`p`.`desc_alta` AS `Descuento`,`p`.`apoyo` AS `Apoyo`,`p`.`precio_productor` AS `Precio_Productor` from ((`toro` `t` join `raza` `r` on((`t`.`id_raza` = `r`.`id`))) join `precios` `p` on((`t`.`id` = `p`.`id_toro`))) where (`p`.`id_empresa` = 1) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `toros`
+--
+
+/*!50001 DROP VIEW IF EXISTS `toros`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `toros` AS select `t`.`id` AS `Arete`,`t`.`nombre` AS `Nombre`,`r`.`nombre` AS `Raza`,`t`.`estatus` AS `Estatus` from (`toro` `t` join `raza` `r` on((`t`.`id_raza` = `r`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -465,4 +568,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-19 23:15:33
+-- Dump completed on 2019-04-20  0:30:33
