@@ -546,7 +546,61 @@ insert into precios values(1,"511JE01329",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01340",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01342",39,13.65,9.75,15.6);
 insert into precios values(1,"511JE01345",39,13.65,9.75,15.6);
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123permisos';
 select * from users;
 describe pv_alta;
 select version();
+select * from permisos;
+describe permisos;
+alter table permisos
+add column Nombre varchar(10);
+create database pvt_alta2;
+select * from permisos;
+use pv_alta;
+describe pedidos;
+describe termo;
+describe canastilla;
+alter table canastilla drop foreign key canastilla_ibfk_1;
+alter table sacado_de drop foreign key sacado_de_ibfk_2;
+alter table termo change id_termo id_termo int not null auto_increment;
+alter table canastilla add foreign key (id_termo) references termo(id_termo);
+alter table sacado_de add foreign key (id_termo) references termo(id_termo);
+alter table pedidos drop foreign key pedidos_ibfk_3;
+alter table tipo_cambio change id id int not null auto_increment;
+alter table pedidos add foreign key (id_tipo_c) references tipo_cambio(id);
+insert into termo(id_termo,numero_termo) values(null,1);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,1);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,2);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,3);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,4);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,5);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,6);
+describe canastilla;
+describe semen;
+select * from canastilla;
+-- canastilla 1
+insert into semen(id_canastilla,id_toro,unidades)values(1,(select id from toro where nombre="concord"),860);
+-- canastilla 2
+insert into semen(id_canastilla,id_toro,unidades)values(2,(select id from toro where nombre="ketuchel"),450);
+insert into semen(id_canastilla,id_toro,unidades)values(2,(select id from toro where nombre ="zigzag" and id_raza=2),150);
+insert into semen(id_canastilla,id_toro,unidades)values(2,(select id from toro where nombre="ovacao"),200);
+-- canastilla 3
+insert into semen(id_canastilla,id_toro,unidades)values(3,(select id from toro where nombre="gopro"),440);
+insert into semen(id_canastilla,id_toro,unidades)values(3,(select id from toro where nombre ="abba" and id_raza=2),395);
+-- canastilla 4
+insert into semen(id_canastilla,id_toro,unidades)values(4,(select id from toro where nombre ="lancing" and id_raza=2),180);
+insert into semen(id_canastilla,id_toro,unidades)values(4,(select id from toro where nombre ="pineta"),350);
+-- canastilla 5
+insert into semen(id_canastilla,id_toro,unidades)values(5,(select id from toro where nombre ="sprite"),1048);
+-- canastilla 6
+insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="swag"),30);
+insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="explosion"),340);
+insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="toohot" and id_raza=2),30);
+
+
+select id from toro where nombre ="toohot";
+select id from toro where nombre ="lancing" and id_raza=2;
+select * from raza;
+select * from semen;
+select * from termo;
+alter table canastilla auto_increment=8;
