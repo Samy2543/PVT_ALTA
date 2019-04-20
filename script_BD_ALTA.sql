@@ -578,7 +578,8 @@ insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,6);
 describe canastilla;
 describe semen;
 select * from canastilla;
--- canastilla 1
+-- ############# T1
+-- canastilla 1 
 insert into semen(id_canastilla,id_toro,unidades)values(1,(select id from toro where nombre="concord"),860);
 -- canastilla 2
 insert into semen(id_canastilla,id_toro,unidades)values(2,(select id from toro where nombre="ketuchel"),450);
@@ -596,11 +597,27 @@ insert into semen(id_canastilla,id_toro,unidades)values(5,(select id from toro w
 insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="swag"),30);
 insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="explosion"),340);
 insert into semen(id_canastilla,id_toro,unidades)values(6,(select id from toro where nombre ="toohot" and id_raza=2),30);
+-- ############# T2
+-- canastilla 1
+insert into semen(id_canastilla,id_toro,unidades)values(7,(select id from toro where nombre="concord"),760);
+insert into semen(id_canastilla,id_toro,unidades)values(7,(select id from toro where nombre="explosion"),660);
+insert into semen(id_canastilla,id_toro,unidades)values(7,(select id from toro where nombre="swag"),560);
+-- canastilla 2
+insert into semen(id_canastilla,id_toro,unidades)values(8,(select id from toro where nombre="ketuchel"),450);
 
-
+select * from termo;
+select * from canastilla;
 select id from toro where nombre ="toohot";
 select id from toro where nombre ="lancing" and id_raza=2;
 select * from raza;
 select * from semen;
 select * from termo;
 alter table canastilla auto_increment=8;
+create or replace view inventario as
+select t.id as arete, t.nombre as nombre , tr.id_termo as Termo, c.num_canasta Canastilla, s.unidades
+from toro t
+inner join semen s on t.id= s.id_toro 
+inner join canastilla c on s.id_canastilla=c.id_canastilla
+inner join termo tr on tr.id_termo=c.id_termo
+order by  t.id,tr.id_termo,c.id_canastilla; 
+select * from inventario;

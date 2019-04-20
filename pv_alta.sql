@@ -124,6 +124,22 @@ LOCK TABLES `detalle_pedidos` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `inventario`
+--
+
+DROP TABLE IF EXISTS `inventario`;
+/*!50001 DROP VIEW IF EXISTS `inventario`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `inventario` AS SELECT 
+ 1 AS `arete`,
+ 1 AS `nombre`,
+ 1 AS `Termo`,
+ 1 AS `Canastilla`,
+ 1 AS `unidades`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `pedidos`
 --
 
@@ -288,7 +304,7 @@ CREATE TABLE `semen` (
 
 LOCK TABLES `semen` WRITE;
 /*!40000 ALTER TABLE `semen` DISABLE KEYS */;
-INSERT INTO `semen` VALUES (1,'011HO11767',860),(2,'011HO12191',450),(2,'511HO12275',150),(2,'011HO12228',200),(3,'011HO12124',440),(3,'511HO12264',395),(4,'511HO12226',180),(4,'011HO12263',350),(5,'011HO11982',1048),(6,'011HO11963',30),(6,'011HO12174',340),(6,'511HO11813',30);
+INSERT INTO `semen` VALUES (1,'011HO11767',860),(2,'011HO12191',450),(2,'511HO12275',150),(2,'011HO12228',200),(3,'011HO12124',440),(3,'511HO12264',395),(4,'511HO12226',180),(4,'011HO12263',350),(5,'011HO11982',1048),(6,'011HO11963',30),(6,'011HO12174',340),(6,'511HO11813',30),(7,'011HO11767',760),(7,'011HO12174',660),(7,'011HO11963',560),(8,'011HO12191',450);
 /*!40000 ALTER TABLE `semen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,6 +436,24 @@ LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `inventario`
+--
+
+/*!50001 DROP VIEW IF EXISTS `inventario`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `inventario` AS select `t`.`id` AS `arete`,`t`.`nombre` AS `nombre`,`tr`.`id_termo` AS `Termo`,`c`.`num_canasta` AS `Canastilla`,`s`.`unidades` AS `unidades` from (((`toro` `t` join `semen` `s` on((`t`.`id` = `s`.`id_toro`))) join `canastilla` `c` on((`s`.`id_canastilla` = `c`.`id_canastilla`))) join `termo` `tr` on((`tr`.`id_termo` = `c`.`id_termo`))) order by `t`.`id`,`tr`.`id_termo`,`c`.`id_canastilla` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -430,4 +464,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-19 21:14:41
+-- Dump completed on 2019-04-19 22:54:12
