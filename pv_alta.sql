@@ -30,7 +30,7 @@ CREATE TABLE `bitacora` (
   PRIMARY KEY (`id_bit`),
   KEY `id_usuario` (`id_usuario`),
   CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,8 +39,23 @@ CREATE TABLE `bitacora` (
 
 LOCK TABLES `bitacora` WRITE;
 /*!40000 ALTER TABLE `bitacora` DISABLE KEYS */;
+INSERT INTO `bitacora` VALUES (2,1,'2019-04-21','El usuario JuanV1 creo al usuario JuanV1'),(3,1,'2019-04-21','El usuario JuanV1 capturo la venta # HV21');
 /*!40000 ALTER TABLE `bitacora` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `bitacora_c`
+--
+
+DROP TABLE IF EXISTS `bitacora_c`;
+/*!50001 DROP VIEW IF EXISTS `bitacora_c`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8mb4;
+/*!50001 CREATE VIEW `bitacora_c` AS SELECT 
+ 1 AS `Usuario`,
+ 1 AS `Fecha`,
+ 1 AS `Descripcion`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `canastilla`
@@ -56,7 +71,7 @@ CREATE TABLE `canastilla` (
   PRIMARY KEY (`id_canastilla`),
   KEY `id_termo` (`id_termo`),
   CONSTRAINT `canastilla_ibfk_1` FOREIGN KEY (`id_termo`) REFERENCES `termo` (`id_termo`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +80,7 @@ CREATE TABLE `canastilla` (
 
 LOCK TABLES `canastilla` WRITE;
 /*!40000 ALTER TABLE `canastilla` DISABLE KEYS */;
-INSERT INTO `canastilla` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6),(7,2,1),(8,2,2),(9,2,3),(10,2,4);
+INSERT INTO `canastilla` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,1,5),(6,1,6);
 /*!40000 ALTER TABLE `canastilla` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,6 +222,25 @@ LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `registro_V` AFTER INSERT ON `pedidos` FOR EACH ROW begin
+			insert into bitacora(id_bit,id_usuario,fecha,descripcion)
+            values(null,new.id_usuario,new.fecha_captura,
+            concat("El usuario ", (select usuario from usuario where id= new.id_usuario) ," capturo la venta # ",new.id_pedido));
+        end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `permisos`
@@ -338,7 +372,7 @@ CREATE TABLE `semen` (
 
 LOCK TABLES `semen` WRITE;
 /*!40000 ALTER TABLE `semen` DISABLE KEYS */;
-INSERT INTO `semen` VALUES (1,'011HO11767',860),(2,'011HO12191',450),(2,'511HO12275',150),(2,'011HO12228',200),(3,'011HO12124',440),(3,'511HO12264',395),(4,'511HO12226',180),(4,'011HO12263',350),(5,'011HO11982',1048),(6,'011HO11963',30),(6,'011HO12174',340),(6,'511HO11813',30),(7,'011HO11767',760),(7,'011HO12174',660),(7,'011HO11963',560),(8,'011HO12191',450);
+INSERT INTO `semen` VALUES (1,'011HO11767',860),(2,'011HO12191',450),(2,'511HO12275',150),(2,'011HO12228',200),(3,'011HO12124',440),(3,'511HO12264',395),(4,'511HO12226',180),(4,'011HO12263',350),(5,'011HO11982',1048),(6,'011HO11963',30),(6,'011HO12174',340),(6,'511HO11813',30);
 /*!40000 ALTER TABLE `semen` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,7 +437,7 @@ CREATE TABLE `tipo_cambio` (
   `fecha` date DEFAULT NULL,
   `valor` decimal(20,4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -412,6 +446,7 @@ CREATE TABLE `tipo_cambio` (
 
 LOCK TABLES `tipo_cambio` WRITE;
 /*!40000 ALTER TABLE `tipo_cambio` DISABLE KEYS */;
+INSERT INTO `tipo_cambio` VALUES (1,'2019-04-21',17.8500);
 /*!40000 ALTER TABLE `tipo_cambio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -471,10 +506,13 @@ CREATE TABLE `usuario` (
   `passw` varchar(30) NOT NULL,
   `id_permiso` int(11) DEFAULT NULL,
   `usuario` varchar(50) DEFAULT NULL,
+  `id_u_registro` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_permiso` (`id_permiso`),
-  CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permisos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_u_registro` (`id_u_registro`),
+  CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permisos` (`id`),
+  CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`id_u_registro`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,9 +521,45 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Juan','123',1,'JJvidana'),(2,'Alejandrina','123',2,'Yiya');
+INSERT INTO `usuario` VALUES (1,'Juan V','123',1,'JuanV1',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `registro_U` AFTER INSERT ON `usuario` FOR EACH ROW begin
+				insert into bitacora(id_bit,id_usuario,fecha,descripcion)
+                values(null,1,now(), concat("El usuario ",(select usuario from usuario where id=new.id_u_registro)," creo al usuario ",new.usuario));
+            end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `bitacora_c`
+--
+
+/*!50001 DROP VIEW IF EXISTS `bitacora_c`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `bitacora_c` AS select `u`.`usuario` AS `Usuario`,`b`.`fecha` AS `Fecha`,`b`.`descripcion` AS `Descripcion` from (`usuario` `u` join `bitacora` `b` on((`u`.`id` = `b`.`id_usuario`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `info_usuarios`
@@ -568,4 +642,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-20  0:30:33
+-- Dump completed on 2019-04-21 18:47:49

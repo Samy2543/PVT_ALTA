@@ -577,6 +577,7 @@ insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,3);
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,4);
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,5);
 insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,6);
+insert into canastilla(id_canastilla,id_termo,num_canasta)values(null,1,7);
 describe canastilla;
 describe semen;
 select * from canastilla;
@@ -650,3 +651,50 @@ from usuario u
 inner join permisos p on u.id_permiso=p.id;
 
 describe clientes; -- 1 activo, 0 inactivo
+-- triggers
+drop trigger registro_U;
+delimiter //
+create trigger registro_U
+	after insert on usuario
+		for each row
+			begin
+				insert into bitacora(id_bit,id_usuario,fecha,descripcion)
+                values(null,1,now(), concat("El usuario ",(select usuario from usuario where id=new.id_u_registro)," creo al usuario ",new.usuario));
+            end// 
+delimiter ;
+drop trigger registro_V;
+delimiter //
+create trigger registro_V
+	after insert on pedidos
+		for each row
+        begin
+			insert into bitacora(id_bit,id_usuario,fecha,descripcion)
+            values(null,new.id_usuario,new.fecha_captura,
+            concat("El usuario ", (select usuario from usuario where id= new.id_usuario) ," capturo la venta # ",new.id_pedido));
+        end//
+ delimiter ;       
+
+select * from usuario;
+select * from bitacora;
+
+create or replace view bitacora_c as
+select u.usuario Usuario,b.fecha Fecha,b.descripcion Descripcion
+from usuario u
+inner join bitacora b on u.id=b.id_usuario;
+select * from bitacora_c;
+select * from pedidos;
+
+-- usuarios
+delete from usuario where id=0;
+describe usuario;
+insert into usuario(id,Nombre,passw,id_permiso,usuario,id_u_registro)
+values(null,"Juan V","123",1,"JuanV1",1);
+
+-- borrar datos de una tabla sin checar las llaves
+SET FOREIGN_KEY_CHECKS=0;
+truncate table pedidos;
+SET FOREIGN_KEY_CHECKS=1;
+
+alter table usuario auto_increment=1;
+alter table canastilla auto_increment=6;
+select * from canastilla;
