@@ -1,0 +1,6 @@
+<<<<<<< HEAD
+Hola__"#
+=======
+karla
+>>>>>>> 35662066a4322b1ec469d5ee7662ceab3d9dd3a8
+no se que se hizo??
