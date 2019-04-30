@@ -18,6 +18,8 @@ public class Login {
 
     Login() {
         JFrame login = WindowElement.getTemplate(new Dimension(490, 665), 50, 0, 210, 30, 0, WindowElement.PinkStyle.Right_Left);
+        login.setLocationRelativeTo(null);
+        login.setVisible(true);
     }
     
     public static void main(String args[]){

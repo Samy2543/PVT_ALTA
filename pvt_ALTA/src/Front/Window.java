@@ -13,8 +13,7 @@ import javax.swing.border.Border;
 public class Window {
 
     public static void main(String args[]) {
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
+        
         JFrame template = new JFrame();
 
         JLabel black = new JLabel();
@@ -54,6 +53,5 @@ public class Window {
         //template.setBackground(Color.decode("#eaeaea"));
         template.setLayout(null);
         //template.setUndecorated(true);
-        template.setVisible(true);
     }
 }

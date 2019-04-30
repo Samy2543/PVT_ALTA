@@ -8,6 +8,7 @@ package Front;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
@@ -95,6 +96,14 @@ public class WindowElement {
                 break;
         }
 
+        JLabel close = new JLabel(new WindowElement().getImage());
+        int padding = (header - close.getIcon().getIconHeight()) / 2;
+        int closeWidht = close.getIcon().getIconWidth();
+        int closeHeight = close.getIcon().getIconHeight();
+        close.setBounds(size.width - closeWidht - padding, padding, closeWidht, closeHeight);
+
+        template.add(close);
+
         template.add(pink1);
 
         template.add(pink2);
@@ -110,8 +119,10 @@ public class WindowElement {
         //login.setBackground(Color.decode("#eaeaea"));
         template.setLayout(null);
         template.setUndecorated(true);
-        template.setVisible(true);
         return template;
     }
 
+    public ImageIcon getImage() {
+        return new ImageIcon(getClass().getResource("/Front/surce/x.png"));
+    }
 }
