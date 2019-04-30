@@ -17,7 +17,7 @@ public class Login {
     JFrame login;
 
     Login() {
-        JFrame login = WindowElement.getTemplate(new Dimension(490, 665), 50, 0, 210, 30, 0, WindowElement.PinkStyle.Right_Left);
+        JFrame login = WindowElement.getTemplate(new Dimension(490, 665), 50, 0, 210, 10, 0, 30, 0, WindowElement.PinkStyle.Right_Left);
         login.setLocationRelativeTo(null);
         login.setVisible(true);
     }

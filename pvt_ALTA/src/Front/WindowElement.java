@@ -56,7 +56,7 @@ public class WindowElement {
         return new Dimension(width, height);
     }
 
-    public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int pHeaderHeight, int pFooterHeight, PinkStyle style) {
+    public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style) {
         JFrame template = new JFrame();
         JLabel black = new JLabel();
         JLabel blue = new JLabel();
@@ -84,14 +84,14 @@ public class WindowElement {
 
         black.setBounds(0, 0, size.width, size.height);
         blue.setBounds(0, header, size.width, (size.height - footer - header));
-        white.setBounds(0, (header + 10), size.width, (size.height - footer - header - 10));
+        white.setBounds(0, (header + bHeaderHeight), size.width, (size.height - footer - header - bHeaderHeight - bFooterHeight));
         switch (style) {
             case Left_Right:
-                pink1.setBounds(0, (header + 10), pWidth, pHeaderHeight);
+                pink1.setBounds(0, (header), pWidth, pHeaderHeight);
                 pink2.setBounds((size.width - pWidth), (size.height - footer - pHeaderHeight), pWidth, pFooterHeight);
                 break;
             case Right_Left:
-                pink1.setBounds((size.width - pWidth), (header + 10), pWidth, pHeaderHeight);
+                pink1.setBounds((size.width - pWidth), (header), pWidth, pHeaderHeight);
                 pink2.setBounds(0, (size.height - footer - pHeaderHeight), pWidth, pFooterHeight);
                 break;
         }
