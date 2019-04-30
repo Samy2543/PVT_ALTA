@@ -5,6 +5,7 @@
  */
 package Front;
 
+import java.awt.Dimension;
 import javax.swing.*;
 
 /**
@@ -12,5 +13,14 @@ import javax.swing.*;
  * @author Alan
  */
 public class Login {
+
     JFrame login;
+
+    Login() {
+        JFrame login = WindowElement.getTemplate(new Dimension(490, 665), 50, 0, 210, 30, 0, WindowElement.PinkStyle.Right_Left);
+    }
+    
+    public static void main(String args[]){
+        Login login = new Login();
+    }
 }
