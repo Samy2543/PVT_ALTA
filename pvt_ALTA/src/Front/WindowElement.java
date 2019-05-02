@@ -7,6 +7,11 @@ package Front;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -58,6 +63,7 @@ public class WindowElement {
 
     public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style) {
         JFrame template = new JFrame();
+
         JLabel black = new JLabel();
         JLabel blue = new JLabel();
         JLabel white = new JLabel();
@@ -96,11 +102,16 @@ public class WindowElement {
                 break;
         }
 
-        JLabel close = new JLabel(new WindowElement().getImage());
+        JLabel close = new WindowElement().getCloseLabel(template);
+
         int padding = (header - close.getIcon().getIconHeight()) / 2;
         int closeWidht = close.getIcon().getIconWidth();
         int closeHeight = close.getIcon().getIconHeight();
         close.setBounds(size.width - closeWidht - padding, padding, closeWidht, closeHeight);
+
+        //template.add(WindowElement.getMenuElement("Registra usuario"));
+        String[] names = {"Registrar usuario", "Configurar usuario"};
+        WindowElement.getMenuField("usuarios", names, 0, template);
 
         template.add(close);
 
@@ -116,13 +127,56 @@ public class WindowElement {
 
         template.setSize(size);
 
-        //login.setBackground(Color.decode("#eaeaea"));
-        template.setLayout(null);
+//login.setBackground(Color.decode("#eaeaea"));
+        //template.setLayout(null);
+        template.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         template.setUndecorated(true);
         return template;
     }
 
-    public ImageIcon getImage() {
-        return new ImageIcon(getClass().getResource("/Front/surce/x.png"));
+    public JLabel getCloseLabel(JFrame template) {
+        JLabel label = new JLabel(new ImageIcon(getClass().getResource("/Front/surce/x.png")));
+
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                template.dispose();
+            }
+        });
+        return label;
+    }
+
+    public static JLabel getMenuElement(String name) {
+        JLabel label = new JLabel("   " + name);
+        label.setSize(new Dimension(200, 50));
+        label.setOpaque(true);
+        label.setBackground(WindowElement.White);
+        label.setForeground(WindowElement.Black);
+        label.setFont(new Font("Malgun Gothic", Font.BOLD, 16));
+
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            }
+
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setBackground(WindowElement.Blue);
+                label.setForeground(WindowElement.White);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setBackground(WindowElement.White);
+                label.setForeground(WindowElement.Black);
+            }
+        });
+        return label;
+    }
+
+    public static void getMenuField(String name, String[] nameFields, int x, JFrame template) {
+        MenuField menu = new MenuField(name, nameFields, x);
+        
+        template.add(menu.menu);
+        for (int i = 0; i < menu.fields.size(); i++) {
+            template.add(menu.fields.get(i));
+        }
     }
 }
