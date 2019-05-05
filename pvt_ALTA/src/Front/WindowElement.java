@@ -23,7 +23,7 @@ import javax.swing.border.Border;
  * @author Alan
  */
 public class WindowElement {
-
+    
     enum WindowColor {
         White, Black, Blue, Pink
     };
@@ -36,7 +36,7 @@ public class WindowElement {
     public static Color Black = Color.decode("#444444");
     public static Color Blue = Color.decode("#00D1CD");
     public static Color Pink = Color.decode("#f30067");
-
+    
     public static Border GetBorder(WindowColor color, int punto) {
         Border border = BorderFactory.createLineBorder(White, punto);
 
@@ -60,7 +60,7 @@ public class WindowElement {
     public static Dimension WindowSize(int width, int height) {
         return new Dimension(width, height);
     }
-
+    
     public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style) {
         JFrame template = new JFrame();
 
@@ -111,7 +111,7 @@ public class WindowElement {
 
         //template.add(WindowElement.getMenuElement("Registra usuario"));
         String[] names = {"Registrar usuario", "Configurar usuario"};
-        WindowElement.getMenuField("usuarios", names, 0, template);
+        MenuField.getMenuField("usuarios", names, 0, template);
 
         template.add(close);
 
@@ -146,37 +146,5 @@ public class WindowElement {
         return label;
     }
 
-    public static JLabel getMenuElement(String name) {
-        JLabel label = new JLabel("   " + name);
-        label.setSize(new Dimension(200, 50));
-        label.setOpaque(true);
-        label.setBackground(WindowElement.White);
-        label.setForeground(WindowElement.Black);
-        label.setFont(new Font("Malgun Gothic", Font.BOLD, 16));
-
-        label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            }
-
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                label.setBackground(WindowElement.Blue);
-                label.setForeground(WindowElement.White);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                label.setBackground(WindowElement.White);
-                label.setForeground(WindowElement.Black);
-            }
-        });
-        return label;
-    }
-
-    public static void getMenuField(String name, String[] nameFields, int x, JFrame template) {
-        MenuField menu = new MenuField(name, nameFields, x);
-        
-        template.add(menu.menu);
-        for (int i = 0; i < menu.fields.size(); i++) {
-            template.add(menu.fields.get(i));
-        }
-    }
+    
 }
