@@ -17,14 +17,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 
 /**
  *
  * @author Alan
  */
 public class WindowElement {
-    
-    enum WindowColor {
+
+    public enum WindowColor {
         White, Black, Blue, Pink
     };
 
@@ -36,32 +37,31 @@ public class WindowElement {
     public static Color Black = Color.decode("#444444");
     public static Color Blue = Color.decode("#00D1CD");
     public static Color Pink = Color.decode("#f30067");
-    
-    public static Border GetBorder(WindowColor color, int punto) {
-        Border border = BorderFactory.createLineBorder(White, punto);
 
+    public static Border GetBorder(WindowColor color, int punto) {
+        Color aux = White;
         switch (color) {
             case White:
-                border = BorderFactory.createLineBorder(White, punto);
+                aux = White;
                 break;
             case Black:
-                border = BorderFactory.createLineBorder(Black, punto);
+                aux = Black;
                 break;
             case Blue:
-                border = BorderFactory.createLineBorder(Blue, punto);
+                aux = Blue;
                 break;
             case Pink:
-                border = BorderFactory.createLineBorder(Pink, punto);
+                aux = Pink;
                 break;
         }
-        return border;
+        return BorderFactory.createMatteBorder(0, 1, 1, 1, aux);
     }
 
     public static Dimension WindowSize(int width, int height) {
         return new Dimension(width, height);
     }
-    
-    public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style) {
+
+    public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style, MenuBar menu) {
         JFrame template = new JFrame();
 
         JLabel black = new JLabel();
@@ -110,8 +110,12 @@ public class WindowElement {
         close.setBounds(size.width - closeWidht - padding, padding, closeWidht, closeHeight);
 
         //template.add(WindowElement.getMenuElement("Registra usuario"));
-        String[] names = {"Registrar usuario", "Configurar usuario"};
-        MenuField.getMenuField("usuarios", names, 0, template);
+        try {
+            for (int i = 0; i < menu.menuBar.size(); i++) {
+                menu.menuBar.get(i).getMenuField(template);
+            }
+        } catch (Exception e) {
+        }
 
         template.add(close);
 
@@ -132,6 +136,14 @@ public class WindowElement {
         template.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         template.setUndecorated(true);
+        template.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+                    menu.someoneTyped();
+                } catch (Exception e) {
+                }
+            }
+        });
         return template;
     }
 
@@ -146,5 +158,4 @@ public class WindowElement {
         return label;
     }
 
-    
 }

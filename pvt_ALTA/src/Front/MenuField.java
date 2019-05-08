@@ -28,24 +28,23 @@ public class MenuField {
         fields = new ArrayList<JLabel>();
         for (int i = 0; i < nameFields.length; i++) {
             JLabel aux = MenuField.getMenuElement(nameFields[i]);
-            aux.setBounds(x, (i + 1) * 50, 200, 50);
-            aux.setVisible(controller);
+            aux.setBounds(x, (i + 1) * 50, 300, 50);
+            aux.setVisible(this.IsTyped());
             fields.add(aux);
         }
     }
 
     public static JLabel getMenuElement(String name) {
         JLabel label = new JLabel("   " + name);
-        label.setSize(new Dimension(200, 50));
+        label.setSize(new Dimension(300, 50));
         label.setOpaque(true);
         label.setBackground(WindowElement.White);
         label.setForeground(WindowElement.Black);
+        label.setBorder(WindowElement.GetBorder(WindowElement.WindowColor.Black, 1));
+        
         label.setFont(new Font("Malgun Gothic", Font.BOLD, 16));
 
         label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label.setBackground(WindowElement.Blue);
                 label.setForeground(WindowElement.White);
@@ -68,14 +67,10 @@ public class MenuField {
         label.setFont(new Font("Malgun Gothic", Font.BOLD, 16));
 
         label.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label.setBackground(WindowElement.Blue);
                 label.setForeground(WindowElement.White);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 label.setBackground(WindowElement.Black);
                 label.setForeground(WindowElement.White);
@@ -84,35 +79,31 @@ public class MenuField {
         return label;
     }
 
-    
-    public static void getMenuField(String name, String[] nameFields, int x, JFrame template) {
-        MenuField menu = new MenuField(name, nameFields, x);
-        menu.menu.addMouseListener(new java.awt.event.MouseAdapter() {
+    public void getMenuField(JFrame template) {
+        this.menu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu.controller = !menu.controller;
-                menu.SubMenu();
+                SubMenu();
             }
         });
-        template.add(menu.menu);
-        for (int i = 0; i < menu.fields.size(); i++) {
-            template.add(menu.fields.get(i));
-            
-            menu.fields.get(i).addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menu.controller = !menu.controller;
-                menu.SubMenu();
-            }
-            
-        });
-            
+        template.add(this.menu);
+        for (int i = 0; i < this.fields.size(); i++) {
+            template.add(this.fields.get(i));
+            this.fields.get(i).addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    SubMenu();
+                }
+            });
         }
     }
 
     protected void SubMenu() {
+        this.controller = !this.IsTyped();
         for (int i = 0; i < this.fields.size(); i++) {
-            this.fields.get(i).setVisible(this.controller);
-                System.out.println(this.controller);
+            this.fields.get(i).setVisible(this.IsTyped());
         }
     }
 
+    public Boolean IsTyped(){
+        return controller;
+    }
 }
