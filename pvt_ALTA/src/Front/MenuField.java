@@ -40,7 +40,7 @@ public class MenuField {
         label.setOpaque(true);
         label.setBackground(WindowElement.White);
         label.setForeground(WindowElement.Black);
-        label.setBorder(WindowElement.GetBorder(WindowElement.WindowColor.Black, 1));
+        label.setBorder(WindowElement.GetMenuBorder(WindowElement.WindowColor.Black, 1));
         
         label.setFont(new Font("Malgun Gothic", Font.BOLD, 16));
 

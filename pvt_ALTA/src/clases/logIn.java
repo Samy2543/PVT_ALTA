@@ -36,12 +36,13 @@ public class logIn extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         user = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        pass = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
+        pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -50,6 +51,7 @@ public class logIn extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 310, 80));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("USUARIO");
@@ -58,6 +60,32 @@ public class logIn extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("CONTRASEÑA");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 129, 131, 64));
+
+        user.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                userInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userActionPerformed(evt);
+            }
+        });
+        user.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                userPropertyChange(evt);
+            }
+        });
+        user.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                userKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                userKeyTyped(evt);
+            }
+        });
         getContentPane().add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 82, 200, 30));
 
         jButton1.setText("Ingresar");
@@ -68,14 +96,12 @@ public class logIn extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 211, -1, -1));
 
-        pass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passKeyPressed(evt);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Front/surce/x.png"))); // NOI18N
+        jLabel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jLabel3MouseDragged(evt);
             }
         });
-        getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 148, 200, 30));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Front/surce/x.png"))); // NOI18N
         jLabel3.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jLabel3FocusGained(evt);
@@ -100,7 +126,14 @@ public class logIn extends javax.swing.JFrame {
                 jLabel3PropertyChange(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 0, -1, 35));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, 35));
+
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passKeyPressed(evt);
+            }
+        });
+        getContentPane().add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 148, 200, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -142,6 +175,30 @@ public class logIn extends javax.swing.JFrame {
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
+
+    private void jLabel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseDragged
+        
+    }//GEN-LAST:event_jLabel3MouseDragged
+
+    private void userPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_userPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userPropertyChange
+
+    private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userActionPerformed
+
+    private void userKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userKeyTyped
+
+    private void userInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_userInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userInputMethodTextChanged
+
+    private void userKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userKeyReleased
     public void verificar(){
         //System.out.println("Entro");
         String usuario=user.getText().toString();
@@ -197,6 +254,7 @@ public class logIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField pass;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables

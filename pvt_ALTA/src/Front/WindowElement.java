@@ -8,14 +8,18 @@ package Front;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 
@@ -38,35 +42,50 @@ public class WindowElement {
     public static Color Blue = Color.decode("#00D1CD");
     public static Color Pink = Color.decode("#f30067");
 
-    public static Border GetBorder(WindowColor color, int punto) {
-        Color aux = White;
+    public static Border GetMenuBorder(WindowColor color, int punto) {
+        return BorderFactory.createMatteBorder(0, punto, punto, punto, getColor(color));
+    }
+    
+    public static Border GetRadiusBorder(WindowColor color, int punto, int radius) {
+        return BorderFactory.createMatteBorder(punto, punto, punto, punto, getColor(color));
+    }
+
+    public static Color getColor(WindowColor color) {
         switch (color) {
             case White:
-                aux = White;
-                break;
+                return White;
             case Black:
-                aux = Black;
-                break;
+                return Black;
             case Blue:
-                aux = Blue;
-                break;
+                return Blue;
             case Pink:
-                aux = Pink;
-                break;
+                return Pink;
+            default:
+                return White;
         }
-        return BorderFactory.createMatteBorder(0, 1, 1, 1, aux);
     }
 
     public static Dimension WindowSize(int width, int height) {
         return new Dimension(width, height);
     }
 
-    public static JFrame getTemplate(Dimension size, int header, int footer, int pWidth, int bHeaderHeight, int bFooterHeight, int pHeaderHeight, int pFooterHeight, PinkStyle style, MenuBar menu) {
+    public static JFrame getTemplate(
+            Dimension size, 
+            int header, 
+            int footer, 
+            int pWidth, 
+            int bHeaderHeight, 
+            int bFooterHeight, 
+            int pHeaderHeight, 
+            int pFooterHeight, 
+            PinkStyle style, 
+            MenuBar menu, 
+            JPanel white
+    ) {
         JFrame template = new JFrame();
 
         JLabel black = new JLabel();
         JLabel blue = new JLabel();
-        JLabel white = new JLabel();
         JLabel pink1 = new JLabel();
         JLabel pink2 = new JLabel();
 
@@ -115,6 +134,9 @@ public class WindowElement {
                 menu.menuBar.get(i).getMenuField(template);
             }
         } catch (Exception e) {
+            JLabel logo = new WindowElement().getLogoLabel();
+            logo.setBounds(0, 10, 430, 161);
+            //template.add(logo);
         }
 
         template.add(close);
@@ -123,6 +145,7 @@ public class WindowElement {
 
         template.add(pink2);
 
+        // JPanel con el contenido de la pantalla
         template.add(white);
 
         template.add(blue);
@@ -155,6 +178,11 @@ public class WindowElement {
                 template.dispose();
             }
         });
+        return label;
+    }
+    
+    public JLabel getLogoLabel() {
+        JLabel label = new JLabel(new ImageIcon(getClass().getResource("/Front/surce/logo.png")));
         return label;
     }
 
